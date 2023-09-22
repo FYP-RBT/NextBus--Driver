@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nextbus_driver/colors.dart';
 import 'package:nextbus_driver/components/button.dart';
+import 'package:nextbus_driver/pages/routeDetailsAddPage.dart';
 
 class StartJourney extends StatefulWidget {
   const StartJourney({Key? key}) : super(key: key);
@@ -49,7 +50,10 @@ class _StartJourneyState extends State<StartJourney> {
               const SizedBox(
                 height: 100,
               ),
-              MyButton(onTap: () {}, childText: 'Start', width: 200),
+              MyButton(onTap: () {Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const RouteDetailsAdd()),
+              );}, childText: 'Start', width: 200),
               const SizedBox(
                 height: 200,
               ),
