@@ -49,7 +49,13 @@ class _StartJourneyState extends State<StartJourney> {
               const SizedBox(
                 height: 100,
               ),
-              MyButton(onTap: () {}, childText: 'Start', width: 200)
+              MyButton(onTap: () {}, childText: 'Stt', width: 200),
+              const SizedBox(
+                height: 100,
+              ),
+              Image.asset('images/navBar.png'),
+
+
 
 
 
