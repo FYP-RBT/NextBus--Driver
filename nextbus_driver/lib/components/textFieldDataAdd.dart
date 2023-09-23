@@ -23,10 +23,10 @@ class DataAddTextField extends StatelessWidget {
         decoration: InputDecoration(
             prefixIcon: prefixIcon,
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColor.textFieldBorder),
+                borderSide: BorderSide(color: AppColor.textFieldBlue),
                 borderRadius: BorderRadius.circular(10)),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
+                borderSide: BorderSide(color: AppColor.textFieldBorder),
                 borderRadius: BorderRadius.circular(10)),
             fillColor: AppColor.textFieldFill,
             filled: true,
