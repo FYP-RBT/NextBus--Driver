@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nextbus_driver/pages/homePage.dart';
 
 import '../colors.dart';
 import '../components/button.dart';
@@ -75,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const StartJourney()),
+                          builder: (context) => const HomePage()),
                     );
                   },
                   childText: 'Log In',
