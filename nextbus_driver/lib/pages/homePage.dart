@@ -11,6 +11,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String get userName => "Suren Perera";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +29,34 @@ class _HomePageState extends State<HomePage> {
                 child: Image.asset(
                   'images/VerLogoBlue 1.png',
                 )),
+
+            const Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Text('Welcome...',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18
+                  ),),
+
+                ),
+              ],
+            ),
+
+             Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Text(userName,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24
+                    ),),
+                ),
+              ],
+            ),
+
           ],
         ),
       ),
