@@ -52,7 +52,7 @@ class LandingPage extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const CreateAccount()),
+                MaterialPageRoute(builder: (context) =>  CreateAccount(onTap: () {},)),
               );
             },
             childText: 'Create an Account',

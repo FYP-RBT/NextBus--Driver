@@ -10,7 +10,7 @@ import '../pages/startJourneyPage.dart';
 import 'createAccount.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key, required void Function() onTap}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -202,7 +202,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => CreateAccount()),
+                                builder: (context) => CreateAccount(onTap: () {  },)),
                           );
                         },
                         child: const Text(
