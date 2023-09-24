@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nextbus_driver/colors.dart';
 import 'package:nextbus_driver/components/button.dart';
-import 'package:nextbus_driver/components/navBar.dart';
+import 'package:nextbus_driver/components/navBarHome.dart';
 import 'package:nextbus_driver/pages/routeDetailsAddPage.dart';
 
 class StartJourney extends StatefulWidget {

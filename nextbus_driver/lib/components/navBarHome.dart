@@ -1,60 +1,7 @@
-// import 'package:flutter/material.dart';
-// import 'package:nextbus_driver/pages/homePage.dart';
-// import 'package:nextbus_driver/pages/profilePage.dart';
-// import 'package:nextbus_driver/pages/routeDetailsAddPage.dart';
-// import 'package:nextbus_driver/pages/startJourneyPage.dart';
-// import 'package:nextbus_driver/pages/startLocation.dart';
-//
-// class NavBar extends StatefulWidget {
-//
-//
-//   @override
-//   _NavBarState createState() => _NavBarState();
-// }
-//
-// class _NavBarState extends State<NavBar> {
-//   int currentTab = 0;
-//
-//   final List<Widget> screens =[
-//     StartJourney(),
-//     ProfilePage(),
-//     RouteDetailsAdd(),
-//     HomePage(),
-//     StartLocationPage(),
-//
-//   ];
-//
-//   final PageStorageBucket bucket = PageStorageBucket();
-//
-//   Widget currentScreen = HomePage();
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: PageStorage(
-//         child: currentScreen,
-//         bucket: bucket,
-//           ),
-//
-//      floatingActionButton: FloatingActionButton(
-//       child: Icon(Icons.add),
-//       onPressed: () {},
-//      ),
-//       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-//       // bottomNavigationBar: BottomAppBar(
-//       //   shape: CircularNotchedRectangle(),
-//       //   notchMargin: 10,
-//       //   child: Container(
-//       //     height: 60,
-//       //   ),
-//       //
-//       // ),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import '../colors.dart';
+import '../pages/homePage.dart';
+import '../pages/profilePage.dart';
 
 class NavBarHome extends StatefulWidget {
   const NavBarHome({super.key});
@@ -64,18 +11,13 @@ class NavBarHome extends StatefulWidget {
 }
 
 class _NavBarHomeState extends State<NavBarHome> {
-  int currentIndex = 0;
-
-  setBottomBarIndex(index) {
-    setState(() {
-      currentIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    return SizedBox(
+    final Size size = MediaQuery
+        .of(context)
+        .size;
+    return Container(
       width: size.width,
       height: 80,
       child: Stack(
@@ -102,28 +44,34 @@ class _NavBarHomeState extends State<NavBarHome> {
                 IconButton(
                   icon: Icon(
                     Icons.home,
-                    color: currentIndex == 0
-                        ? AppColor.iconColor
-                        : Colors.grey.shade400,
+                    color: AppColor.iconColor,
                   ),
                   onPressed: () {
-                    setBottomBarIndex(0);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HomePage()),
+                    );
                   },
                   splashColor: Colors.white,
                 ),
+
                 Container(
                   width: size.width * 0.20,
                 ),
                 IconButton(
                     icon: Icon(
-                      Icons.person_2_rounded,
-                      color: currentIndex == 1
-                          ? AppColor.iconColor
-                          : Colors.grey.shade400,
+                        Icons.person_2_rounded,
+                        color: Colors.grey.shade400
                     ),
                     onPressed: () {
-                      setBottomBarIndex(1);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProfilePage()),
+                      );
                     }),
+
               ],
             ),
           )
@@ -132,7 +80,6 @@ class _NavBarHomeState extends State<NavBarHome> {
     );
   }
 }
-
 class BNBCustomPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {

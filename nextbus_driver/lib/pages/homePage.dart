@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nextbus_driver/colors.dart';
-import 'package:nextbus_driver/components/navBar.dart';
+import 'package:nextbus_driver/components/navBarHome.dart';
 import 'package:nextbus_driver/pages/routeDetailsAddPage.dart';
 import 'package:nextbus_driver/pages/startJourneyPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -55,7 +55,6 @@ class _HomePageState extends State<HomePage> {
                     child: Text(
                       'Welcome...',
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
                     ),
@@ -70,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                       userName,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 22,
+                        fontSize: 24,
                       ),
                     ),
                   ),

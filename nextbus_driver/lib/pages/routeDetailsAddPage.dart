@@ -5,7 +5,7 @@ import 'package:nextbus_driver/components/textFieldDataAdd.dart';
 import 'package:nextbus_driver/methods/sizes.dart';
 import 'package:nextbus_driver/pages/startLocation.dart';
 
-import '../components/navBar.dart';
+import '../components/navBarHome.dart';
 
 class RouteDetailsAdd extends StatefulWidget {
   const RouteDetailsAdd({Key? key}) : super(key: key);
