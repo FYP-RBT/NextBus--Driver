@@ -46,15 +46,29 @@ class _CreateAccountState extends State<CreateAccount> {
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
-      // incorrect EMAIL
-      if (e.code == 'user-not-found') {
-        // show error to user
-        wrongEmailMessage();
-      }
 
-      // incorrect PASSWORD
-      else if (e.code == 'wrong-password') {
-        // show error to user
+      if (e.code == 'email-already-in-use') {
+        // Show an error message to the user
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Email Already in Use', style: TextStyle(color: Colors.red),),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      } else if (e.code == 'user-not-found') {
+        // Show an error message to the user for other cases
+        wrongEmailMessage();
+      } else if (e.code == 'wrong-password') {
         wrongPasswordMessage();
       }
     }
@@ -216,8 +230,8 @@ class _CreateAccountState extends State<CreateAccount> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => LoginPage(
-                                      onTap: () {},
-                                    )),
+                                  onTap: () {},
+                                )),
                           );
                         },
                         child: const Text(
