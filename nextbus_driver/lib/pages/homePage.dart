@@ -31,10 +31,11 @@ class _HomePageState extends State<HomePage> {
         elevation: 0, // Remove the app bar shadow
         actions: [
           IconButton(
-            icon: Icon(Icons.logout, color: Colors.black),
+            icon: const Icon(Icons.logout, color: Colors.black),
             onPressed: signUserOut, // Call the signUserOut method when the button is pressed
           ),
         ],
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Center(
