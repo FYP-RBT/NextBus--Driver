@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nextbus_driver/pages/homePage.dart';
 
@@ -16,6 +17,79 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final emailOrPhoneController = TextEditingController();
   final passwordController = TextEditingController();
+
+  void signUserIn() async {
+    // show loading circle
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailOrPhoneController.text,
+        password: passwordController.text,
+      );
+
+      Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+
+      Navigator.pop(context);
+      // incorrect EMAIL
+      if (e.code == 'user-not-found') {
+        // show error to user
+        wrongEmailMessage();
+      }
+
+      // incorrect PASSWORD
+      else if (e.code == 'wrong-password') {
+        // show error to user
+        wrongPasswordMessage();
+      }
+    }
+  }
+
+  // incorrect email message popup
+  void wrongEmailMessage() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const AlertDialog(
+          backgroundColor: Colors.deepPurple,
+          title: Center(
+            child: Text(
+              'Incorrect Email',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  // incorrect password message popup
+  void wrongPasswordMessage() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const AlertDialog(
+          backgroundColor: Colors.deepPurple,
+          title: Center(
+            child: Text(
+              'Incorrect Password',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -72,13 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
               MyButton(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomePage()),
-                    );
-                  },
+                  onTap: signUserIn,
                   childText: 'Log In',
                   width: 180),
               const SizedBox(

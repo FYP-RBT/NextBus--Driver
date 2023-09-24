@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "899877287712",
+    "project_id": "nextbus-driver",
+    "storage_bucket": "nextbus-driver.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899877287712:android:e4dcf588e23f13227b8945",
+        "android_client_info": {
+          "package_name": "com.example.nextbus_driver"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBV2BLg_WHthaa_UIbLn6cVZCjLmCYA40A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
