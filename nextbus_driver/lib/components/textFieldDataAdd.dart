@@ -34,6 +34,5 @@ class DataAddTextField extends StatelessWidget {
             hintStyle: TextStyle(color: Colors.grey[500])),
       ),
     );
-    ;
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nextbus_driver/colors.dart';
 import 'package:nextbus_driver/components/navBar.dart';
+import 'package:nextbus_driver/pages/routeDetailsAddPage.dart';
+import 'package:nextbus_driver/pages/startJourneyPage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -62,17 +64,32 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GestureDetector(
-                    child: Image.asset(
-                      'images/startTrip.png',
-                      width: 150,
-                    )),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const RouteDetailsAdd()), // Replace FirstPage with the actual name of your first page class
+                    );
+                  },
+                  child: Image.asset(
+                    'images/startTrip.png',
+                    width: 150,
+                  ),
+                ),
                 GestureDetector(
-                    child: Image.asset(
-                      'images/activities.png',
-                      width: 150,
-                    )),
+                  onTap: () {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => StartJourney()), // Replace SecondPage with the actual name of your second page class
+                    // );
+                  },
+                  child: Image.asset(
+                    'images/activities.png',
+                    width: 150,
+                  ),
+                ),
               ],
-            ),
+            )
+
 
           ],
         ),
