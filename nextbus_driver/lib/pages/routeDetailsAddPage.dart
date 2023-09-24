@@ -21,7 +21,7 @@ class _RouteDetailsAddState extends State<RouteDetailsAdd> {
       backgroundColor: AppColor.background,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.black,
           ), // Add a back button icon here

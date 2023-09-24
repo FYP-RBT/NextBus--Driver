@@ -5,7 +5,9 @@ import 'package:nextbus_driver/pages/homePage.dart';
 import '../colors.dart';
 import '../components/button.dart';
 import '../components/textField.dart';
+import '../methods/sizes.dart';
 import '../pages/startJourneyPage.dart';
+import 'createAccount.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -100,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             children: [
               const SizedBox(
-                height: 20,
+                height: 15,
               ),
               SizedBox(
                   width: 230,
@@ -113,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Image.asset('images/loginImg.png'),
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               MyTextField(
                 controller: emailOrPhoneController,
@@ -150,13 +152,13 @@ class _LoginPageState extends State<LoginPage> {
                   childText: 'Log In',
                   width: 180),
               const SizedBox(
-                height: 25,
+                height: 15,
               ),
               Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: Image.asset('images/Or.png')),
               const SizedBox(
-                height: 20,
+                height: 5,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -185,6 +187,30 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ],
+              ),
+              SizedBox(
+                width: getPageWidth(context),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Don't have an Account?",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CreateAccount()),
+                          );
+                        },
+                        child: const Text(
+                          'Create an Account',
+                          style: TextStyle(fontSize: 16),
+                        ))
+                  ],
+                ),
               ),
             ],
           ),
