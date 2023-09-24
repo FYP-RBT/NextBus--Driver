@@ -3,6 +3,7 @@ import 'package:nextbus_driver/colors.dart';
 import 'package:nextbus_driver/components/button.dart';
 import 'package:nextbus_driver/components/textFieldDataAdd.dart';
 import 'package:nextbus_driver/methods/sizes.dart';
+import 'package:nextbus_driver/pages/startLocation.dart';
 
 import '../components/navBar.dart';
 
@@ -150,7 +151,12 @@ class _RouteDetailsAddState extends State<RouteDetailsAdd> {
                           ),
                           Center(
                               child: MyButton(
-                                  onTap: () {}, childText: 'Start', width: 180))
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => const StartLocationPage()), // Replace SecondPage with the actual name of your second page class
+                                    );
+                                  }, childText: 'Start', width: 180))
                         ],
                       ),
                     ),
