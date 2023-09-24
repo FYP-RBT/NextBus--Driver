@@ -47,20 +47,37 @@ class _HomePageState extends State<HomePage> {
              Row(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: 20),
+                  padding: const EdgeInsets.only(left: 20),
                   child: Text(userName,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 24
                     ),),
                 ),
               ],
             ),
+            const SizedBox(height: 300,),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                GestureDetector(
+                    child: Image.asset(
+                      'images/startTrip.png',
+                      width: 150,
+                    )),
+                GestureDetector(
+                    child: Image.asset(
+                      'images/activities.png',
+                      width: 150,
+                    )),
+              ],
+            ),
 
           ],
         ),
       ),
-      bottomNavigationBar: NavBarHome(),
+      bottomNavigationBar: const NavBarHome(),
     );
   }
 }
