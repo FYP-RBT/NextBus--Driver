@@ -4,6 +4,8 @@ import 'package:nextbus_driver/components/navBarHome.dart';
 import 'package:nextbus_driver/pages/routeDetailsAddPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../methods/sizes.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -34,7 +36,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: AppColor.background,
       appBar: AppBar(
-        backgroundColor: Colors.transparent, // Make the app bar transparent
+        backgroundColor: AppColor.homeBox, // Make the app bar transparent
         elevation: 0, // Remove the app bar shadow
         actions: [
           IconButton(
@@ -48,42 +50,49 @@ class _HomePageState extends State<HomePage> {
         child: Center(
           child: Column(
             children: [
-              SizedBox(
-                width: 230,
-                height: 130,
-                child: Image.asset(
-                  'images/VerLogoBlue 1.png',
+              Container(
+                width: getPageWidth(context),
+                height: 250,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(25),
+                    bottomRight: Radius.circular(25),
+                  ),
+                  color: AppColor.homeBox,
+                ),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    Image.asset(
+                      'images/fullLogo.png',
+                      width: 250,
+                    ),
+                  ],
                 ),
               ),
-              const Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 20),
-                    child: Text(
-                      'Welcome...',
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
+              SizedBox(height: 20,),
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Text(
+                    'Welcome!',
+                    style: TextStyle(fontSize: 20),
                   ),
-                ],
+                ),
               ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Text(
-                      userName,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
-                      ),
-                    ),
-                  ),
-                ],
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 25.0, vertical: 5),
+                  child: Text(userName,
+                      style: TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.bold)),
+                ),
               ),
               const SizedBox(
-                height: 250,
+                height: 100,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

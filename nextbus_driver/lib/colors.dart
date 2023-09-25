@@ -7,4 +7,6 @@ class AppColor {
   static Color iconColor = const Color(0xFF0079C1);
   static Color textFieldBorder = const Color(0xFFCECECE);
   static Color textFieldFill = const Color(0xFFF4F4F4);
+  static Color homeBox = const Color(0xFFC7C6FF);
+
 }
