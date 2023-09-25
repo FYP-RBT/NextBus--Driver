@@ -67,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Container(
               width: getPageWidth(context),
               height: 380,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
@@ -77,12 +77,17 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ],
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
+              child: const Padding(
+                padding: EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    // Add content for the container here
-                    // For example, additional user details or actions
+                    SizedBox(height: 30,),
+                   Text('Driver Name : S.S.P. Perera ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                    SizedBox(height: 20,),
+                    Text('Bus Number : NA - 2100 ',style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                    SizedBox(height: 20,),
+                    Text('Route Number : 122 ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)
+
                   ],
                 ),
               ),
