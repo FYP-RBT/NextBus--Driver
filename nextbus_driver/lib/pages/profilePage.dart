@@ -47,7 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       body: ListView(
         children: [
-          Column(
+          const Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 20), // Add spacing between AppBar and profile picture
@@ -55,7 +55,7 @@ class _ProfilePageState extends State<ProfilePage> {
               Center(
                 child: CircleAvatar(
                   radius: 60,
-                  backgroundImage: AssetImage('images/profile_picture.png'),
+                  backgroundImage: AssetImage('images/person.png'),
                 ),
               ),
               SizedBox(height: 20), // Add spacing between profile picture and content

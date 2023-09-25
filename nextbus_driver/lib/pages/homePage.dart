@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nextbus_driver/colors.dart';
 import 'package:nextbus_driver/components/navBarHome.dart';
 import 'package:nextbus_driver/pages/routeDetailsAddPage.dart';
-import 'package:nextbus_driver/pages/startJourneyPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,11 +14,19 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String get userName => "Suren Perera";
 
-  final user = FirebaseAuth.instance.currentUser!;
+  // Initialize user as null
+  User? user;
 
   // Function to handle logout
   void signUserOut() async {
     await FirebaseAuth.instance.signOut();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Retrieve the current user when the widget initializes
+    user = FirebaseAuth.instance.currentUser;
   }
 
   @override
