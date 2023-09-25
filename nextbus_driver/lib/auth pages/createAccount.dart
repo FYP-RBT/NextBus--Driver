@@ -5,6 +5,7 @@ import 'package:nextbus_driver/components/textField.dart';
 
 import '../components/button.dart';
 import '../methods/sizes.dart';
+import '../pages/homePage.dart'; // Import the HomePage widget
 import 'loginPage.dart';
 
 class CreateAccount extends StatefulWidget {
@@ -23,7 +24,7 @@ class _CreateAccountState extends State<CreateAccount> {
   final confirmPasswordController = TextEditingController();
 
   void signUserUp() async {
-    // show loading circle
+    // Show loading circle
     showDialog(
       context: context,
       builder: (context) {
@@ -39,6 +40,14 @@ class _CreateAccountState extends State<CreateAccount> {
           email: enterEmailController.text,
           password: enterPasswordController.text,
         );
+
+        // Navigate to the home page after successful sign-up
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage(), // Replace with the appropriate home page widget
+          ),
+        );
       } else {
         wrongPasswordMessage();
       }
@@ -53,7 +62,10 @@ class _CreateAccountState extends State<CreateAccount> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text('Email Already in Use', style: TextStyle(color: Colors.red),),
+              title: const Text(
+                'Email Already in Use',
+                style: TextStyle(color: Colors.red),
+              ),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -74,7 +86,7 @@ class _CreateAccountState extends State<CreateAccount> {
     }
   }
 
-  // incorrect email message popup
+  // Incorrect email message popup
   void wrongEmailMessage() {
     showDialog(
       context: context,
@@ -92,7 +104,7 @@ class _CreateAccountState extends State<CreateAccount> {
     );
   }
 
-  // incorrect password message popup
+  // Incorrect password message popup
   void wrongPasswordMessage() {
     showDialog(
       context: context,
@@ -190,7 +202,7 @@ class _CreateAccountState extends State<CreateAccount> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // google button
+                  // Google button
                   Container(
                     width: 60,
                     height: 60,
@@ -203,7 +215,7 @@ class _CreateAccountState extends State<CreateAccount> {
 
                   const SizedBox(width: 15),
 
-                  //facebook button
+                  // Facebook button
                   Container(
                     width: 60,
                     height: 60,
