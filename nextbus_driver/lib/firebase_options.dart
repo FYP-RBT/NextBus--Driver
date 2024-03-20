@@ -44,37 +44,41 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBd58hNorXyEnVtXtkrjJ8lar7qYfnVolY',
-    appId: '1:899877287712:web:ff45182bcfd399f57b8945',
-    messagingSenderId: '899877287712',
-    projectId: 'nextbus-driver',
-    authDomain: 'nextbus-driver.firebaseapp.com',
-    storageBucket: 'nextbus-driver.appspot.com',
+    apiKey: 'AIzaSyC2PYzqBv1eG_p7jOvIu4ljYyq6jHETfM4',
+    appId: '1:620669314084:web:c539b4c6341048428ca4b1',
+    messagingSenderId: '620669314084',
+    projectId: 'next-bus-rbt-3a502',
+    authDomain: 'next-bus-rbt-3a502.firebaseapp.com',
+    databaseURL: 'https://next-bus-rbt-3a502-default-rtdb.firebaseio.com',
+    storageBucket: 'next-bus-rbt-3a502.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBV2BLg_WHthaa_UIbLn6cVZCjLmCYA40A',
-    appId: '1:899877287712:android:e4dcf588e23f13227b8945',
-    messagingSenderId: '899877287712',
-    projectId: 'nextbus-driver',
-    storageBucket: 'nextbus-driver.appspot.com',
+    apiKey: 'AIzaSyBsxELn_PL513ny9ZMo8AORfg0tf-m2aKk',
+    appId: '1:620669314084:android:a3bd0326f7d024388ca4b1',
+    messagingSenderId: '620669314084',
+    projectId: 'next-bus-rbt-3a502',
+    databaseURL: 'https://next-bus-rbt-3a502-default-rtdb.firebaseio.com',
+    storageBucket: 'next-bus-rbt-3a502.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC-pVERyxVtRU2ipSY8MxUQ8-RfuonAMu0',
-    appId: '1:899877287712:ios:bf8dd0467724d2777b8945',
-    messagingSenderId: '899877287712',
-    projectId: 'nextbus-driver',
-    storageBucket: 'nextbus-driver.appspot.com',
+    apiKey: 'AIzaSyABV-nYhUVp4kHV5RZSxBDYg8ET2PkpFGo',
+    appId: '1:620669314084:ios:771a73d7c570f5d28ca4b1',
+    messagingSenderId: '620669314084',
+    projectId: 'next-bus-rbt-3a502',
+    databaseURL: 'https://next-bus-rbt-3a502-default-rtdb.firebaseio.com',
+    storageBucket: 'next-bus-rbt-3a502.appspot.com',
     iosBundleId: 'com.example.nextbusDriver',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyC-pVERyxVtRU2ipSY8MxUQ8-RfuonAMu0',
-    appId: '1:899877287712:ios:0eb08a7d9acb69a27b8945',
-    messagingSenderId: '899877287712',
-    projectId: 'nextbus-driver',
-    storageBucket: 'nextbus-driver.appspot.com',
+    apiKey: 'AIzaSyABV-nYhUVp4kHV5RZSxBDYg8ET2PkpFGo',
+    appId: '1:620669314084:ios:ec6b96938f1e26008ca4b1',
+    messagingSenderId: '620669314084',
+    projectId: 'next-bus-rbt-3a502',
+    databaseURL: 'https://next-bus-rbt-3a502-default-rtdb.firebaseio.com',
+    storageBucket: 'next-bus-rbt-3a502.appspot.com',
     iosBundleId: 'com.example.nextbusDriver.RunnerTests',
   );
 }

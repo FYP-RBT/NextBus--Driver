@@ -1,9 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:nextbus_driver/colors.dart';
 import 'package:nextbus_driver/components/textField.dart';
 
 import '../components/button.dart';
+import '../components/loading.dart';
+import '../methods/commonMethods.dart';
 import '../methods/sizes.dart';
 import '../pages/homePage.dart'; // Import the HomePage widget
 import 'loginPage.dart';
@@ -23,103 +26,75 @@ class _CreateAccountState extends State<CreateAccount> {
   final enterPasswordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
-  void signUserUp() async {
-    // Show loading circle
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
+  CommonMethods cMethods = CommonMethods();
 
-    try {
-      if (enterPasswordController.text == confirmPasswordController.text) {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: enterEmailController.text,
-          password: enterPasswordController.text,
-        );
+  checkIfNetworkIsAvailable() {
+    cMethods.checkConnectivity(context);
+    signUpFormValidation();
+  }
 
-        // Navigate to the home page after successful sign-up
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HomePage(), // Replace with the appropriate home page widget
-          ),
-        );
-      } else {
-        wrongPasswordMessage();
-      }
-
-      Navigator.pop(context);
-    } on FirebaseAuthException catch (e) {
-      Navigator.pop(context);
-
-      if (e.code == 'email-already-in-use') {
-        // Show an error message to the user
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text(
-                'Email Already in Use',
-                style: TextStyle(color: Colors.red),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-      } else if (e.code == 'user-not-found') {
-        // Show an error message to the user for other cases
-        wrongEmailMessage();
-      } else if (e.code == 'wrong-password') {
-        wrongPasswordMessage();
-      }
+  signUpFormValidation() {
+    if (enterNameController.text.trim().length < 3) {
+      snackBar(
+          context, 'Your name must be 4 or more characters', Colors.redAccent);
+    } else if (enterMobileNumberController.text.trim().length < 8) {
+      snackBar(context, 'Your mobile number must be 8 or more characters',
+          Colors.redAccent);
+    } else if (!enterEmailController.text.contains('@')) {
+      snackBar(context, 'Please enter a valid email', Colors.redAccent);
+    } else if (enterPasswordController.text.trim().length < 6) {
+      snackBar(context, 'Your password must be 6 or more characters',
+          Colors.redAccent);
+    } else if (enterPasswordController.text.trim() !=
+        confirmPasswordController.text.trim()) {
+      snackBar(context, 'Passwords do not match', Colors.redAccent);
+    } else {
+      registerNewDriver();
+      // Proceed with the sign-up process as all validations are passed
     }
   }
 
-  // Incorrect email message popup
-  void wrongEmailMessage() {
+  registerNewDriver() async {
     showDialog(
       context: context,
-      builder: (context) {
-        return const AlertDialog(
-          backgroundColor: Colors.deepPurple,
-          title: Center(
-            child: Text(
-              'Incorrect Email',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-        );
-      },
+      barrierDismissible: false,
+      builder: (BuildContext context) =>
+          LoadingDialog(messageText: 'Registering your account...'),
     );
-  }
 
-  // Incorrect password message popup
-  void wrongPasswordMessage() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const AlertDialog(
-          backgroundColor: Colors.deepPurple,
-          title: Center(
-            child: Text(
-              'Incorrect Password',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-        );
-      },
+    final User? userFirebase = (await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
+      email: enterEmailController.text.trim(),
+      password: enterPasswordController.text.trim(),
+    ).catchError((errorMsg){
+      Navigator.pop(context);
+      snackBar(context, errorMsg.toString(), Colors.red);
+    })
+    ).user;
+
+    if(!context.mounted)return;
+    Navigator.pop(context);
+
+    DatabaseReference userRef = FirebaseDatabase.instance.ref().child('drivers').child(userFirebase!.uid);
+    Map driverDataMap =
+    {
+      "name": enterNameController.text.trim(),
+      "email": enterEmailController.text.trim(),
+      "phone": enterMobileNumberController.text.trim(),
+      "id": userFirebase.uid,
+      "blockStatus": "no",
+    };
+    userRef.set(driverDataMap);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => LoginPage()),
     );
+
+    snackBar(context, 'Account created, you can Login now!', Colors.green.shade500);
+
+
   }
 
   @override
@@ -188,7 +163,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 height: 25,
               ),
 
-              MyButton(onTap: signUserUp, childText: 'Sign Up', width: 180),
+              MyButton(onTap: checkIfNetworkIsAvailable, childText: 'Sign Up', width: 180),
 
               const SizedBox(
                 height: 25,
@@ -242,7 +217,6 @@ class _CreateAccountState extends State<CreateAccount> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => LoginPage(
-                                  onTap: () {},
                                 )),
                           );
                         },

@@ -1,13 +1,14 @@
 {
   "project_info": {
-    "project_number": "899877287712",
-    "project_id": "nextbus-driver",
-    "storage_bucket": "nextbus-driver.appspot.com"
+    "project_number": "620669314084",
+    "firebase_url": "https://next-bus-rbt-3a502-default-rtdb.firebaseio.com",
+    "project_id": "next-bus-rbt-3a502",
+    "storage_bucket": "next-bus-rbt-3a502.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:899877287712:android:e4dcf588e23f13227b8945",
+        "mobilesdk_app_id": "1:620669314084:android:a3bd0326f7d024388ca4b1",
         "android_client_info": {
           "package_name": "com.example.nextbus_driver"
         }
@@ -15,7 +16,26 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBV2BLg_WHthaa_UIbLn6cVZCjLmCYA40A"
+          "current_key": "AIzaSyBsxELn_PL513ny9ZMo8AORfg0tf-m2aKk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620669314084:android:76d2ef890b605b258ca4b1",
+        "android_client_info": {
+          "package_name": "com.shahiru.nextbuspassenger"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsxELn_PL513ny9ZMo8AORfg0tf-m2aKk"
         }
       ],
       "services": {

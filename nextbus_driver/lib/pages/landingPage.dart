@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nextbus_driver/auth%20pages/authPage.dart';
 
 import '../auth pages/createAccount.dart';
 import '../auth pages/loginPage.dart';
@@ -52,7 +51,10 @@ class LandingPage extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>  CreateAccount(onTap: () {},)),
+                MaterialPageRoute(
+                    builder: (context) => CreateAccount(
+                          onTap: () {},
+                        )),
               );
             },
             childText: 'Create an Account',
@@ -71,10 +73,14 @@ class LandingPage extends StatelessWidget {
                   style: TextStyle(fontSize: 18),
                 ),
                 TextButton(
-                    onPressed: () {Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const AuthPage()),
-                    );},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const LoginPage()),
+                      );
+                    },
                     child: const Text(
                       'Login',
                       style: TextStyle(fontSize: 18),

@@ -1,16 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:nextbus_driver/pages/homePage.dart';
 
 import '../colors.dart';
+import '../comman_var.dart';
 import '../components/button.dart';
+import '../components/loading.dart';
 import '../components/textField.dart';
+import '../methods/commonMethods.dart';
 import '../methods/sizes.dart';
 import '../pages/startJourneyPage.dart';
 import 'createAccount.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key, required void Function() onTap}) : super(key: key);
+  const LoginPage({Key? key,} ) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -20,76 +24,73 @@ class _LoginPageState extends State<LoginPage> {
   final emailOrPhoneController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void signUserIn() async {
-    // show loading circle
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
+  CommonMethods cMethods = CommonMethods();
 
+  checkIfNetworkIsAvailable() {
+    cMethods.checkConnectivity(context);
+    signInFormValidation();
+  }
 
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailOrPhoneController.text,
-        password: passwordController.text,
-      );
-
-      Navigator.pop(context);
-    } on FirebaseAuthException catch (e) {
-
-      Navigator.pop(context);
-      // incorrect EMAIL
-      if (e.code == 'user-not-found') {
-        // show error to user
-        wrongEmailMessage();
-      }
-
-      // incorrect PASSWORD
-      else if (e.code == 'wrong-password') {
-        // show error to user
-        wrongPasswordMessage();
-      }
+  signInFormValidation() {
+    if (!emailOrPhoneController.text.contains('@')) {
+      snackBar(context, 'Please enter a valid email', Colors.redAccent);
+    } else if (passwordController.text.trim().length < 6) {
+      snackBar(context, 'Your password must be 6 or more characters',
+          Colors.redAccent);
+    } else {
+      signInUser();
+      // Proceed with the sign-up process as all validations are passed
     }
   }
 
-  // incorrect email message popup
-  void wrongEmailMessage() {
+  signInUser()async{
     showDialog(
       context: context,
-      builder: (context) {
-        return const AlertDialog(
-          backgroundColor: Colors.deepPurple,
-          title: Center(
-            child: Text(
-              'Incorrect Email',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-        );
-      },
+      barrierDismissible: false,
+      builder: (BuildContext context) =>
+          LoadingDialog(messageText: 'Allowing you to login...'),
     );
-  }
 
-  // incorrect password message popup
-  void wrongPasswordMessage() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const AlertDialog(
-          backgroundColor: Colors.deepPurple,
-          title: Center(
-            child: Text(
-              'Incorrect Password',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-        );
-      },
-    );
+    final User? userFirebase = (await FirebaseAuth.instance
+        .signInWithEmailAndPassword(
+      email: emailOrPhoneController.text.trim(),
+      password: passwordController.text.trim(),
+    ).catchError((errorMsg){
+      Navigator.pop(context);
+      snackBar(context, 'Incorrect email or password!', Colors.red);
+    })
+    ).user;
+
+    if(!context.mounted)return;
+    Navigator.pop(context);
+
+    if(userFirebase != null){
+      DatabaseReference userRef = FirebaseDatabase.instance.ref().child('drivers').child(userFirebase.uid);
+      userRef.once().then((snap){
+        if(snap.snapshot.value!=null){
+          if((snap.snapshot.value as Map)['blockStatus']=='no'){
+            userName = (snap.snapshot.value as Map)['name'];
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+
+          }
+          else{
+            snackBar(context, 'You are blocked, Contact admin!',
+                Colors.redAccent);
+            FirebaseAuth.instance.signOut();
+
+          }
+
+        }
+        else{
+          FirebaseAuth.instance.signOut();
+          snackBar(context, 'Your record do not exist as driver..',
+              Colors.redAccent);
+        }
+      });
+    }
   }
 
 
@@ -148,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
               MyButton(
-                  onTap: signUserIn,
+                  onTap: checkIfNetworkIsAvailable,
                   childText: 'Log In',
                   width: 180),
               const SizedBox(
