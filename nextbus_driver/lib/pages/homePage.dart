@@ -4,6 +4,7 @@ import 'package:nextbus_driver/components/navBarHome.dart';
 import 'package:nextbus_driver/pages/routeDetailsAddPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../comman_var.dart';
 import '../methods/sizes.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,22 +15,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String get userName => "Suren Perera";
 
-  // Initialize user as null
-  User? user;
+
 
   // Function to handle logout
   void signUserOut() async {
     await FirebaseAuth.instance.signOut();
   }
 
-  @override
-  void initState() {
-    super.initState();
-    // Retrieve the current user when the widget initializes
-    user = FirebaseAuth.instance.currentUser;
-  }
 
   @override
   Widget build(BuildContext context) {

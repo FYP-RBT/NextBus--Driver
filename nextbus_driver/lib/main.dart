@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nextbus_driver/pages/splashScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'firebase_options.dart';
 
 void main() async{
@@ -8,6 +9,12 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await Permission.locationWhenInUse.isDenied.then((valueOfPermission)
+  {
+    if(valueOfPermission){
+      Permission.locationWhenInUse.request();
+    }
+  });
   runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {
