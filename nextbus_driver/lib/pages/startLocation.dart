@@ -73,8 +73,9 @@ class _StartLocationPageState extends State<StartLocationPage> {
       body: Stack(
         children: [
           GoogleMap(
+            padding: EdgeInsets.only(top: 40),
             mapType: MapType.normal,
-            myLocationButtonEnabled: true,
+            myLocationEnabled: true,
             initialCameraPosition: googleGooglePlexInitialPosition,
             onMapCreated: (GoogleMapController mapController){
               controllerGoogleMap=mapController;

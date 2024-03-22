@@ -9,4 +9,7 @@ class AppColor {
   static Color textFieldFill = const Color(0xFFF4F4F4);
   static Color homeBox = const Color(0xFFC7C6FF);
 
+
+  static Color lightBlueBack = const Color(0xFFC6E7FF);
+
 }

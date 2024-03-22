@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../colors.dart';
+import 'homePage.dart';
 import 'landingPage.dart';
 
 
@@ -19,7 +21,7 @@ class _SplashState extends State<Splash> {
       // After the delay, navigate to the home page
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const LandingPage()),
+        MaterialPageRoute(builder: (context) => FirebaseAuth.instance.currentUser == null ? LandingPage() :HomePage()),
       );
     });
   }

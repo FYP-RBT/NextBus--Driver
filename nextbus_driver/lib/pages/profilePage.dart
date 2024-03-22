@@ -1,8 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nextbus_driver/colors.dart';
+import 'package:nextbus_driver/comman_var.dart';
 import 'package:nextbus_driver/components/navBarProfile.dart';
 import 'package:nextbus_driver/methods/sizes.dart';
+import '../components/button.dart';
 import '../components/navBarHome.dart';
+import 'landingPage.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -45,54 +49,53 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         ),
       ),
-      body: ListView(
+      body: Column(
         children: [
-          const Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: 20), // Add spacing between AppBar and profile picture
-              // Circular Avatar for Profile Picture
-              Center(
-                child: CircleAvatar(
-                  radius: 60,
-                  backgroundImage: AssetImage('images/person.png'),
-                ),
-              ),
-              SizedBox(height: 20), // Add spacing between profile picture and content
-              // Add your profile content here
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(15),
-            child: Container(
-              width: getPageWidth(context),
-              height: 380,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey, // shadow color
-                    offset: Offset(0, 3), // shadow's offset
-                    blurRadius: 5, // blur radius
+          Container(
+            height: 100,
+            margin: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Colors.grey.shade300),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Icon(
+                      Icons.person_3_rounded,
+                      size: 40,
+                    ),
                   ),
+                  Container(
+                    margin: EdgeInsets.only(right: 15),
+                    height: 80,
+                    width: 3,
+                    color: AppColor.lightBlueBack,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(driverName,style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
+                      Text(driverEmail,style: TextStyle(fontSize: 16,),),
+                    ],
+                  )
                 ],
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    SizedBox(height: 30,),
-                   Text('Driver Name : S.S.P. Perera ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                    SizedBox(height: 20,),
-                    Text('Bus Number : NA - 2100 ',style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                    SizedBox(height: 20,),
-                    Text('Route Number : 122 ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)
-
-                  ],
-                ),
               ),
             ),
           ),
+          SizedBox(height: 20),
+
+          MyButton(onTap: (){
+            FirebaseAuth.instance.signOut();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => LandingPage()),
+            );
+          }, childText: 'Logout', width: 200)
         ],
       ),
       bottomNavigationBar: const NavBarProfile(),
