@@ -75,9 +75,13 @@ class _StartLocationPageState extends State<StartLocationPage> {
 
     newTripRequestReference = FirebaseDatabase.instance.ref()
         .child("drivers")
-        .child(FirebaseAuth.instance.currentUser!.uid)
-        .child("newTripStatus");
-    newTripRequestReference!.set("started");
+        .child(FirebaseAuth.instance.currentUser!.uid);
+
+    newTripRequestReference!.child("newTripStatus").set("started");
+    newTripRequestReference!.child("busNumber").set("WP NA 1035");
+    newTripRequestReference!.child("routeNumber").set("122");
+    newTripRequestReference!.child("seats").set("54");
+
 
     newTripRequestReference!.onValue.listen((event) { });
   }
@@ -104,6 +108,18 @@ class _StartLocationPageState extends State<StartLocationPage> {
     });
   }
 
+
+  goOfflineNow()
+  {
+    //stop sharing driver live location updates
+    Geofire.removeLocation(FirebaseAuth.instance.currentUser!.uid);
+
+    //stop listening to the newTripStatus
+    newTripRequestReference!.child("newTripStatus").remove();
+    newTripRequestReference!.child("busNumber").remove();
+    newTripRequestReference!.child("routeNumber").remove();
+    newTripRequestReference!.child("seats").remove();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -250,6 +266,7 @@ class _StartLocationPageState extends State<StartLocationPage> {
                                             else
                                             {
                                               //go offline
+                                              goOfflineNow();
 
                                               Navigator.pop(context);
 
