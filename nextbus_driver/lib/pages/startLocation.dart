@@ -12,6 +12,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nextbus_driver/colors.dart';
 
 import '../comman_var.dart';
+import '../pushNotification/push_notification_system.dart';
 
 class StartLocationPage extends StatefulWidget {
   const StartLocationPage({Key? key}) : super(key: key);
@@ -121,6 +122,19 @@ class _StartLocationPageState extends State<StartLocationPage> {
     newTripRequestReference!.child("seats").remove();
   }
 
+  initializePushNotificationSystem()
+  {
+    PushNotificationSystem notificationSystem = PushNotificationSystem();
+    notificationSystem.generateDeviceRegistrationToken();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initializePushNotificationSystem();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -216,8 +230,8 @@ class _StartLocationPageState extends State<StartLocationPage> {
 
                                   Text(
                                     (!isDriverAvailable)
-                                        ? "You are about to go online, you will become available to receive trip requests from users."
-                                        : "You are about to go offline, you will stop receiving new trip requests from users.",
+                                        ? "You are about to go online, you will become available to share live location for passengers."
+                                        : "You are about to go offline, you will stop share live location to for passengers.",
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
                                       color: Colors.white30,

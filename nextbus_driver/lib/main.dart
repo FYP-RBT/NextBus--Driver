@@ -15,6 +15,16 @@ void main() async{
       Permission.locationWhenInUse.request();
     }
   });
+
+  await Permission.notification.isDenied.then((valueOfPermission)
+  {
+    if(valueOfPermission)
+    {
+      Permission.notification.request();
+    }
+  });
+
+
   runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {
