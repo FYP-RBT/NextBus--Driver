@@ -126,6 +126,7 @@ class _StartLocationPageState extends State<StartLocationPage> {
   {
     PushNotificationSystem notificationSystem = PushNotificationSystem();
     notificationSystem.generateDeviceRegistrationToken();
+    notificationSystem.startListeningForNewNotification();
   }
 
   @override
