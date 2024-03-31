@@ -108,6 +108,8 @@ class PushNotificationSystem
       tripDetailsInfo.userPhone = (dataSnapshot.snapshot.value! as Map)["userPhone"];
       tripDetailsInfo.busRoute = (dataSnapshot.snapshot.value! as Map)["busRoute"];
 
+      tripDetailsInfo.tripID = tripID;
+
       showDialog(
         context: context,
         builder: (BuildContext context) => NotificationDialog(tripDetailsInfo: tripDetailsInfo,),

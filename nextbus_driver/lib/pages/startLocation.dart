@@ -54,6 +54,7 @@ class _StartLocationPageState extends State<StartLocationPage> {
   {
     Position positionOfUser = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.bestForNavigation);
     currentPositionOfDriver=positionOfUser;
+    driverCurrentPosition = currentPositionOfDriver;
 
     LatLng positionOfUserInLatLng=LatLng(currentPositionOfDriver!.latitude, currentPositionOfDriver!.longitude);
 
