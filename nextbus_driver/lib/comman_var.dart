@@ -14,3 +14,7 @@ const CameraPosition googleGooglePlexInitialPosition = CameraPosition(
 );
 
 StreamSubscription<Position>? positionStreamHomePage;
+
+int driverTripRequestTimeout = 20;
+
+// final audioPlayer = AssetsAudioPlayer();
