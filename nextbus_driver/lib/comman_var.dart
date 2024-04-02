@@ -13,7 +13,14 @@ const CameraPosition googleGooglePlexInitialPosition = CameraPosition(
   zoom: 14.4746,
 );
 
+const CameraPosition googlePlexInitialPosition = CameraPosition(
+  target: LatLng(37.42796133580664, -122.085749655962),
+  zoom: 14.4746,
+);
+
 StreamSubscription<Position>? positionStreamHomePage;
+
+StreamSubscription<Position>? positionStreamNewTripPage;
 
 int driverTripRequestTimeout = 20;
 

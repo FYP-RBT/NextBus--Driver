@@ -12,6 +12,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nextbus_driver/colors.dart';
 
 import '../comman_var.dart';
+import '../models/map_theme_methods.dart';
 import '../pushNotification/push_notification_system.dart';
 
 class StartLocationPage extends StatefulWidget {
@@ -34,21 +35,23 @@ class _StartLocationPageState extends State<StartLocationPage> {
 
   DatabaseReference? newTripRequestReference;
 
-  void updateMapTheme (GoogleMapController controller)
-  {
-    getJsonFileFromThemes('themes/map_night.json').then((value)=>setGoogleMapStyle(value,controller));
-  }
+  MapThemeMethods themeMethods = MapThemeMethods();
 
-  Future<String> getJsonFileFromThemes (String mapStylePath) async{
-    ByteData byteData = await rootBundle.load(mapStylePath);
-    var list = byteData.buffer.asUint8List(byteData.offsetInBytes,byteData.lengthInBytes);
-    return utf8.decode(list);
-  }
-
-  setGoogleMapStyle(String googleMapStyle, GoogleMapController controller)
-  {
-    controller.setMapStyle(googleMapStyle);
-  }
+  // void updateMapTheme (GoogleMapController controller)
+  // {
+  //   getJsonFileFromThemes('themes/map_night.json').then((value)=>setGoogleMapStyle(value,controller));
+  // }
+  //
+  // Future<String> getJsonFileFromThemes (String mapStylePath) async{
+  //   ByteData byteData = await rootBundle.load(mapStylePath);
+  //   var list = byteData.buffer.asUint8List(byteData.offsetInBytes,byteData.lengthInBytes);
+  //   return utf8.decode(list);
+  // }
+  //
+  // setGoogleMapStyle(String googleMapStyle, GoogleMapController controller)
+  // {
+  //   controller.setMapStyle(googleMapStyle);
+  // }
 
   getCurrentLiveLocationOfDriver() async
   {
@@ -165,7 +168,7 @@ class _StartLocationPageState extends State<StartLocationPage> {
             initialCameraPosition: googleGooglePlexInitialPosition,
             onMapCreated: (GoogleMapController mapController){
               controllerGoogleMap=mapController;
-              updateMapTheme(controllerGoogleMap!);
+              themeMethods.updateMapTheme(controllerGoogleMap!);
               googleMapCompleterController.complete(controllerGoogleMap);
               getCurrentLiveLocationOfDriver();
             },
