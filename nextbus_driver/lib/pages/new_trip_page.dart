@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -10,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../comman_var.dart';
 import '../components/loading.dart';
+import '../components/payment_dialog.dart';
 import '../methods/commonMethods.dart';
 import '../models/map_theme_methods.dart';
 import '../models/trip_details.dart';
@@ -42,6 +44,7 @@ class _NewTripPageState extends State<NewTripPage>
   String durationText = "", distanceText = "";
   String buttonTitleText = "ARRIVED";
   Color buttonColor = Colors.indigoAccent;
+  CommonMethods cMethods = CommonMethods();
 
   makeMarker()
   {
@@ -260,6 +263,72 @@ class _NewTripPageState extends State<NewTripPage>
         });
       }
     }
+  }
+
+
+  endTripNow() async
+  {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) => LoadingDialog(messageText: 'Please wait...',),
+    );
+
+    var driverCurrentLocationLatLng = LatLng(driverCurrentPosition!.latitude, driverCurrentPosition!.longitude);
+
+    var directionDetailsEndTripInfo = await CommonMethods.getDirectionDetailsFromAPI(
+      widget.newTripDetailsInfo!.pickUpLatLng!, //pickup
+      driverCurrentLocationLatLng, //destination
+    );
+
+    Navigator.pop(context);
+
+    String fareAmount = (cMethods.calculateFareAmount(directionDetailsEndTripInfo!)).toString();
+
+    await FirebaseDatabase.instance.ref().child("tripRequests")
+        .child(widget.newTripDetailsInfo!.tripID!)
+        .child("fareAmount").set(fareAmount);
+
+    await FirebaseDatabase.instance.ref().child("tripRequests")
+        .child(widget.newTripDetailsInfo!.tripID!)
+        .child("status").set("ended");
+
+    positionStreamNewTripPage!.cancel();
+
+    //dialog for collecting fare amount
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => PaymentDialog(fareAmount: fareAmount),
+    );
+
+    //save fare amount to driver total earnings
+    saveFareAmountToDriverTotalEarnings(fareAmount);
+  }
+
+  saveFareAmountToDriverTotalEarnings(String fareAmount) async
+  {
+    DatabaseReference driverEarningsRef = FirebaseDatabase.instance.ref()
+        .child("drivers")
+        .child(FirebaseAuth.instance.currentUser!.uid)
+        .child("earnings");
+
+    await driverEarningsRef.once().then((snap)
+    {
+      if(snap.snapshot.value != null)
+      {
+        double previousTotalEarnings = double.parse(snap.snapshot.value.toString());
+        double fareAmountForTrip = double.parse(fareAmount);
+
+        double newTotalEarnings = previousTotalEarnings + fareAmountForTrip;
+
+        driverEarningsRef.set(newTotalEarnings);
+      }
+      else
+      {
+        driverEarningsRef.set(fareAmount);
+      }
+    });
   }
 
   @override
@@ -486,6 +555,7 @@ class _NewTripPageState extends State<NewTripPage>
                           else if(statusOfTrip == "ontrip")
                           {
                             //end the trip
+                            endTripNow();
                           }
                         },
                         style: ElevatedButton.styleFrom(
