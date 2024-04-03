@@ -95,7 +95,8 @@ class _NotificationDialogState extends State<NotificationDialog>
         driverTripStatusRef.set("accepted");
 
         //disable homepage location updates
-        cMethods.turnOffLocationUpdatesForHomePage();
+        // cMethods.turnOffLocationUpdatesForHomePage();
+        ///edited as we want for testing
 
         Navigator.push(context, MaterialPageRoute(builder: (c)=> NewTripPage(newTripDetailsInfo: widget.tripDetailsInfo)));
       }
