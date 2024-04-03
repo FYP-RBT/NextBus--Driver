@@ -35,6 +35,7 @@ class _HomePageState extends State<HomePage> {
           setState(() {
             driverName = (snap.snapshot.value as Map)['name'];
             driverEmail = (snap.snapshot.value as Map)['email'];
+            driverPhone = (snap.snapshot.value as Map)['phone'];
           });
 
         }

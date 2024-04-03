@@ -296,14 +296,19 @@ class _NewTripPageState extends State<NewTripPage>
     positionStreamNewTripPage!.cancel();
 
     //dialog for collecting fare amount
+    displayPaymentDialog(fareAmount);
+
+    //save fare amount to driver total earnings
+    saveFareAmountToDriverTotalEarnings(fareAmount);
+  }
+
+  displayPaymentDialog(fareAmount)
+  {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) => PaymentDialog(fareAmount: fareAmount),
     );
-
-    //save fare amount to driver total earnings
-    saveFareAmountToDriverTotalEarnings(fareAmount);
   }
 
   saveFareAmountToDriverTotalEarnings(String fareAmount) async
@@ -329,6 +334,43 @@ class _NewTripPageState extends State<NewTripPage>
         driverEarningsRef.set(fareAmount);
       }
     });
+  }
+
+
+  saveDriverDataToTripInfo() async
+  {
+    Map<String, dynamic> driverDataMap =
+    {
+      "status": "accepted",
+      "driverID": FirebaseAuth.instance.currentUser!.uid,
+      "driverName": driverName,
+      "driverPhone": driverPhone,
+      "carDetails": '122' + " - " + 'WP NA 1035' + " - " + '54',
+    };
+
+    Map<String, dynamic> driverCurrentLocation =
+    {
+      'latitude': driverCurrentPosition!.latitude.toString(),
+      'longitude': driverCurrentPosition!.longitude.toString(),
+    };
+
+    await FirebaseDatabase.instance.ref()
+        .child("tripRequests")
+        .child(widget.newTripDetailsInfo!.tripID!)
+        .update(driverDataMap);
+
+    await FirebaseDatabase.instance.ref()
+        .child("tripRequests")
+        .child(widget.newTripDetailsInfo!.tripID!)
+        .child("driverLocation").update(driverCurrentLocation);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    saveDriverDataToTripInfo();
   }
 
   @override

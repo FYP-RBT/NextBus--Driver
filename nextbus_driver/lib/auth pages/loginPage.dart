@@ -70,6 +70,8 @@ class _LoginPageState extends State<LoginPage> {
         if(snap.snapshot.value!=null){
           if((snap.snapshot.value as Map)['blockStatus']=='no'){
             driverName = (snap.snapshot.value as Map)['name'];
+            driverEmail = (snap.snapshot.value as Map)['email'];
+            driverPhone = (snap.snapshot.value as Map)['phone'];
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => HomePage()),

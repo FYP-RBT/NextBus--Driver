@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 String driverName = '';
 String driverEmail = '';
+String driverPhone = '';
 String googleMapKey="AIzaSyBsxELn_PL513ny9ZMo8AORfg0tf-m2aKk";
 
 
