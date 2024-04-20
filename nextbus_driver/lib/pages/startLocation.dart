@@ -145,17 +145,18 @@ class _StartLocationPageState extends State<StartLocationPage> {
     return Scaffold(
       backgroundColor: AppColor.background,
       appBar: AppBar(
+        title: const Text('Start Your Journey',style: TextStyle(color: Colors.white),),
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: Colors.black,
+            color: Colors.white,
           ), // Add a back button icon here
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
         centerTitle: true,
-        backgroundColor: Colors.transparent, // Make the app bar transparent
+        backgroundColor:AppColor.textFieldBlue, // Make the app bar transparent
         elevation: 0,
       ),
       body: Stack(
@@ -174,158 +175,163 @@ class _StartLocationPageState extends State<StartLocationPage> {
             },
           ),
 
-          Container(
-            height: 136,
-            width: double.infinity,
-            color: Colors.black54,
-          ),
+          // Container(
+          //   height: 100,
+          //   width: double.infinity,
+          //   color: Colors.black54,
+          // ),
 
           ///go online offline button
           Positioned(
-            top: 61,
+            bottom: 30,
             left: 0,
             right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+            child: Container(
+              color: Colors.black54,
+              height: 100,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
 
-                ElevatedButton(
-                  onPressed: ()
-                  {
-                    showModalBottomSheet(
-                        context: context,
-                        isDismissible: false,
-                        builder: (BuildContext context)
-                        {
-                          return Container(
-                            decoration: const BoxDecoration(
-                              color: Colors.black87,
-                              boxShadow:
-                              [
-                                BoxShadow(
-                                  color: Colors.grey,
-                                  blurRadius: 5.0,
-                                  spreadRadius: 0.5,
-                                  offset: Offset(
-                                    0.7,
-                                    0.7,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            height: 221,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
-                              child: Column(
-                                children: [
-
-                                  const SizedBox(height:  11,),
-
-                                  Text(
-                                    (!isDriverAvailable) ? "GO ONLINE NOW" : "GO OFFLINE NOW",
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      fontSize: 22,
-                                      color: Colors.white70,
-                                      fontWeight: FontWeight.bold,
+                  ElevatedButton(
+                    onPressed: ()
+                    {
+                      showModalBottomSheet(
+                          context: context,
+                          isDismissible: false,
+                          builder: (BuildContext context)
+                          {
+                            return Container(
+                              decoration: const BoxDecoration(
+                                color: Colors.black87,
+                                boxShadow:
+                                [
+                                  BoxShadow(
+                                    color: Colors.grey,
+                                    blurRadius: 5.0,
+                                    spreadRadius: 0.5,
+                                    offset: Offset(
+                                      0.7,
+                                      0.7,
                                     ),
                                   ),
-
-                                  const SizedBox(height: 21,),
-
-                                  Text(
-                                    (!isDriverAvailable)
-                                        ? "You are about to go online, you will become available to share live location for passengers."
-                                        : "You are about to go offline, you will stop share live location to for passengers.",
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      color: Colors.white30,
-                                    ),
-                                  ),
-
-                                  const SizedBox(height: 25,),
-
-                                  Row(
-                                    children: [
-
-                                      Expanded(
-                                        child: ElevatedButton(
-                                          onPressed: ()
-                                          {
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Text(
-                                              "BACK"
-                                          ),
-                                        ),
-                                      ),
-
-                                      const SizedBox(width: 16,),
-
-                                      Expanded(
-                                        child: ElevatedButton(
-                                          onPressed: ()
-                                          {
-                                            if(!isDriverAvailable)
-                                            {
-                                              ///go online
-                                              goOnlineNow();
-
-                                              ///get driver location updates
-                                              setAndGetLocationUpdates();
-
-                                              Navigator.pop(context);
-
-                                              setState(() {
-                                                colorToShow = Colors.pink;
-                                                titleToShow = "GO OFFLINE NOW";
-                                                isDriverAvailable = true;
-                                              });
-                                            }
-                                            else
-                                            {
-                                              //go offline
-                                              goOfflineNow();
-
-                                              Navigator.pop(context);
-
-                                              setState(() {
-                                                colorToShow = Colors.green;
-                                                titleToShow = "GO ONLINE NOW";
-                                                isDriverAvailable = false;
-                                              });
-                                            }
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: (titleToShow == "GO ONLINE NOW")
-                                                ? Colors.green
-                                                : Colors.pink,
-                                          ),
-                                          child: const Text(
-                                              "CONFIRM"
-                                          ),
-                                        ),
-                                      ),
-
-                                    ],
-                                  ),
-
                                 ],
                               ),
-                            ),
-                          );
-                        }
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: colorToShow,
-                  ),
-                  child: Text(
-                    titleToShow,
-                  ),
-                ),
+                              height: 221,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
+                                child: Column(
+                                  children: [
 
-              ],
+                                    const SizedBox(height:  11,),
+
+                                    Text(
+                                      (!isDriverAvailable) ? "GO ONLINE NOW" : "GO OFFLINE NOW",
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        fontSize: 22,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+
+                                    const SizedBox(height: 21,),
+
+                                    Text(
+                                      (!isDriverAvailable)
+                                          ? "You are about to go online, you will become available to share live location for passengers."
+                                          : "You are about to go offline, you will stop share live location to for passengers.",
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+
+                                    const SizedBox(height: 25,),
+
+                                    Row(
+                                      children: [
+
+                                        Expanded(
+                                          child: ElevatedButton(
+                                            onPressed: ()
+                                            {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text(
+                                                "BACK"
+                                            ),
+                                          ),
+                                        ),
+
+                                        const SizedBox(width: 16,),
+
+                                        Expanded(
+                                          child: ElevatedButton(
+                                            onPressed: ()
+                                            {
+                                              if(!isDriverAvailable)
+                                              {
+                                                ///go online
+                                                goOnlineNow();
+
+                                                ///get driver location updates
+                                                setAndGetLocationUpdates();
+
+                                                Navigator.pop(context);
+
+                                                setState(() {
+                                                  colorToShow = Colors.pink;
+                                                  titleToShow = "GO OFFLINE NOW";
+                                                  isDriverAvailable = true;
+                                                });
+                                              }
+                                              else
+                                              {
+                                                //go offline
+                                                goOfflineNow();
+
+                                                Navigator.pop(context);
+
+                                                setState(() {
+                                                  colorToShow = Colors.green;
+                                                  titleToShow = "GO ONLINE NOW";
+                                                  isDriverAvailable = false;
+                                                });
+                                              }
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: (titleToShow == "GO ONLINE NOW")
+                                                  ? Colors.green
+                                                  : Colors.pink,
+                                            ),
+                                            child: const Text(
+                                                "CONFIRM"
+                                            ),
+                                          ),
+                                        ),
+
+                                      ],
+                                    ),
+
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: colorToShow,
+                      foregroundColor: Colors.white
+                    ),
+                    child: Text(
+                      titleToShow,
+                    ),
+                  ),
+
+                ],
+              ),
             ),
           ),
 
