@@ -59,13 +59,36 @@ class _NotificationDialogState extends State<NotificationDialog> {
       // Update the state if the value is fetched successfully
       setState(() {
         driversRouteNumber = snapshot.value.toString();
-        print(
-            "Driver's Route Number: $driversRouteNumber"); // Print the route number in the terminal
+        print("Driver's Route Number: $driversRouteNumber");
+        // Check if the route numbers match and take appropriate action
+        if (driversRouteNumber == widget.tripDetailsInfo!.busRoute) {
+          tripRequestStatus = "accepted";
+          autoAcceptTrip();
+        } else {
+          tripRequestStatus = "declined";
+
+          Timer(Duration(seconds: 3), () {
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            }
+          });
+        }
       });
     } else {
       print("Route number not found.");
+      tripRequestStatus = "declined";
     }
   }
+
+  void autoAcceptTrip() {
+    // Set the trip request status to accepted before checking its availability
+    setState(() {
+      tripRequestStatus = "accepted";
+    });
+    checkAvailabilityOfTripRequest(context);
+  }
+
+
 
   @override
   void initState() {
@@ -258,53 +281,10 @@ class _NotificationDialogState extends State<NotificationDialog> {
 
             //decline btn - accept btn
             Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        // audioPlayer.stop();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.pink,
-                      ),
-                      child: const Text(
-                        "DECLINE",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // audioPlayer.stop();
-
-                        setState(() {
-                          tripRequestStatus = "accepted";
-                        });
-
-                        checkAvailabilityOfTripRequest(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                      ),
-                      child: const Text(
-                        "ACCEPT",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                tripRequestStatus == "accepted" ? "Checked route and accepted" : "Checked route didn't match",
+                style: TextStyle(color: Colors.white, fontSize: 18),
               ),
             ),
 
