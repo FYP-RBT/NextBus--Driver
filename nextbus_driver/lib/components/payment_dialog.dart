@@ -92,10 +92,6 @@ class _PaymentDialogState extends State<PaymentDialog>
 
                 // Restart.restartApp();
 
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const StartLocationPage()), // Replace SecondPage with the actual name of your second page class
-                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,

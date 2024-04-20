@@ -16,7 +16,10 @@ import '../models/map_theme_methods.dart';
 import '../pushNotification/push_notification_system.dart';
 
 class StartLocationPage extends StatefulWidget {
-  const StartLocationPage({Key? key}) : super(key: key);
+  final String routNumber;
+  final String busNumber;
+  final String seatsCount;
+  const StartLocationPage({Key? key, required this.routNumber, required this.busNumber, required this.seatsCount}) : super(key: key);
 
   @override
   State<StartLocationPage> createState() => _StartLocationPageState();
@@ -37,21 +40,7 @@ class _StartLocationPageState extends State<StartLocationPage> {
 
   MapThemeMethods themeMethods = MapThemeMethods();
 
-  // void updateMapTheme (GoogleMapController controller)
-  // {
-  //   getJsonFileFromThemes('themes/map_night.json').then((value)=>setGoogleMapStyle(value,controller));
-  // }
-  //
-  // Future<String> getJsonFileFromThemes (String mapStylePath) async{
-  //   ByteData byteData = await rootBundle.load(mapStylePath);
-  //   var list = byteData.buffer.asUint8List(byteData.offsetInBytes,byteData.lengthInBytes);
-  //   return utf8.decode(list);
-  // }
-  //
-  // setGoogleMapStyle(String googleMapStyle, GoogleMapController controller)
-  // {
-  //   controller.setMapStyle(googleMapStyle);
-  // }
+
 
   getCurrentLiveLocationOfDriver() async
   {
@@ -83,9 +72,9 @@ class _StartLocationPageState extends State<StartLocationPage> {
         .child(FirebaseAuth.instance.currentUser!.uid);
 
     newTripRequestReference!.child("newTripStatus").set("started");
-    newTripRequestReference!.child("busNumber").set("WP NA 1035");
-    newTripRequestReference!.child("routeNumber").set("122");
-    newTripRequestReference!.child("seats").set("54");
+    newTripRequestReference!.child("busNumber").set(widget.busNumber);
+    newTripRequestReference!.child("routeNumber").set(widget.routNumber);
+    newTripRequestReference!.child("seats").set(widget.seatsCount);
 
 
     newTripRequestReference!.onValue.listen((event) { });

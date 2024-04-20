@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nextbus_driver/colors.dart';
 import 'package:nextbus_driver/components/button.dart';
 import 'package:nextbus_driver/components/textFieldDataAdd.dart';
+import 'package:nextbus_driver/methods/commonMethods.dart';
 import 'package:nextbus_driver/methods/sizes.dart';
 import 'package:nextbus_driver/pages/startLocation.dart';
 
@@ -15,6 +16,12 @@ class RouteDetailsAdd extends StatefulWidget {
 }
 
 class _RouteDetailsAddState extends State<RouteDetailsAdd> {
+
+  final routNumberController = TextEditingController();
+  final busNumberController = TextEditingController();
+  final seatsCountController = TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,6 +95,7 @@ class _RouteDetailsAddState extends State<RouteDetailsAdd> {
                             ],
                           ),
                           DataAddTextField(
+                            controller: routNumberController,
                             hintText: 'ex: 002 / 17',
                             prefixIcon: Icon(
                               Icons.location_on_rounded,
@@ -114,6 +122,7 @@ class _RouteDetailsAddState extends State<RouteDetailsAdd> {
                             ],
                           ),
                           DataAddTextField(
+                            controller: busNumberController,
                             hintText: 'ex: NA - 2100',
                             prefixIcon: Icon(
                               Icons.directions_bus_filled_rounded,
@@ -140,6 +149,7 @@ class _RouteDetailsAddState extends State<RouteDetailsAdd> {
                             ],
                           ),
                           DataAddTextField(
+                            controller: seatsCountController,
                             hintText: 'ex: 54',
                             prefixIcon: Icon(
                               Icons.airline_seat_recline_normal_outlined,
@@ -152,11 +162,22 @@ class _RouteDetailsAddState extends State<RouteDetailsAdd> {
                           Center(
                               child: MyButton(
                                   onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => const StartLocationPage()), // Replace SecondPage with the actual name of your second page class
-                                    );
-                                  }, childText: 'Start', width: 180))
+                                    // Simple validation to check if the text fields are not empty
+                                    if (routNumberController.text.isEmpty || busNumberController.text.isEmpty || seatsCountController.text.isEmpty) {
+                                      snackBar(context, 'Please fill all the fields', Colors.redAccent);
+                                    } else {
+                                      // Navigate to StartLocationPage if all fields are valid
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => StartLocationPage(
+                                          routNumber: routNumberController.text,
+                                          busNumber: busNumberController.text,
+                                          seatsCount: seatsCountController.text,
+                                        )),
+                                      );
+                                    }
+                                  },
+                                  childText: 'Start', width: 180))
                         ],
                       ),
                     ),
