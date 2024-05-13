@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -136,7 +134,7 @@ class _StartLocationPageState extends State<StartLocationPage> {
       appBar: AppBar(
         title: const Text('Start Your Journey',style: TextStyle(color: Colors.white),),
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.white,
           ), // Add a back button icon here
@@ -152,7 +150,7 @@ class _StartLocationPageState extends State<StartLocationPage> {
         children: [
 
           GoogleMap(
-            padding: EdgeInsets.only(top: 40),
+            padding: const EdgeInsets.only(top: 40),
             mapType: MapType.normal,
             myLocationEnabled: true,
             initialCameraPosition: googleGooglePlexInitialPosition,
