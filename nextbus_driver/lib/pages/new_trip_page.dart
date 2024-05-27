@@ -182,16 +182,33 @@ class _NewTripPageState extends State<NewTripPage>
     });
   }
 
-  getLiveLocationUpdatesOfDriver()
-  {
+  getLiveLocationUpdatesOfDriver() {
     LatLng lastPositionLatLng = LatLng(0, 0);
 
-    positionStreamNewTripPage = Geolocator.getPositionStream().listen((Position positionDriver)
-    {
+    positionStreamNewTripPage = Geolocator.getPositionStream().listen((Position positionDriver) {
       driverCurrentPosition = positionDriver;
 
       LatLng driverCurrentPositionLatLng = LatLng(driverCurrentPosition!.latitude, driverCurrentPosition!.longitude);
 
+      // Calculate distance between driver and user
+      double distanceInMeters = Geolocator.distanceBetween(driverCurrentPositionLatLng.latitude, driverCurrentPositionLatLng.longitude,
+          widget.newTripDetailsInfo!.pickUpLatLng!.latitude, widget.newTripDetailsInfo!.pickUpLatLng!.longitude);
+
+      // If distance is less than or equal to 5 meters, change status to "arrived"
+      if (distanceInMeters <= 5 && statusOfTrip == "accepted") {
+        setState(() {
+          buttonTitleText = "Start Trip";
+          buttonColor = Colors.green;
+        });
+        statusOfTrip = "arrived";
+
+        FirebaseDatabase.instance.ref()
+            .child("tripRequests")
+            .child(widget.newTripDetailsInfo!.tripID!)
+            .child("status").set("arrived");
+      }
+
+      // Update driver's location marker
       Marker carMarker = Marker(
         markerId: const MarkerId("carMarkerID"),
         position: driverCurrentPositionLatLng,
@@ -209,10 +226,10 @@ class _NewTripPageState extends State<NewTripPage>
 
       lastPositionLatLng = driverCurrentPositionLatLng;
 
-      //update Trip Details Information
+      // Update trip details information
       updateTripDetailsInformation();
 
-      //update driver location to tripRequest
+      // Update driver location to tripRequest
       Map updatedLocationOfDriver =
       {
         "latitude": driverCurrentPosition!.latitude,
@@ -224,6 +241,7 @@ class _NewTripPageState extends State<NewTripPage>
           .set(updatedLocationOfDriver);
     });
   }
+
 
   updateTripDetailsInformation() async
   {
