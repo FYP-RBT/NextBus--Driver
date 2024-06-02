@@ -190,14 +190,25 @@ class _NewTripPageState extends State<NewTripPage>
 
       LatLng driverCurrentPositionLatLng = LatLng(driverCurrentPosition!.latitude, driverCurrentPosition!.longitude);
 
-      // Calculate distance between driver and user
-      double distanceInMeters = Geolocator.distanceBetween(driverCurrentPositionLatLng.latitude, driverCurrentPositionLatLng.longitude,
-          widget.newTripDetailsInfo!.pickUpLatLng!.latitude, widget.newTripDetailsInfo!.pickUpLatLng!.longitude);
+      /// Calculate distance between driver and user
+      double distanceToPickup = Geolocator.distanceBetween(
+        driverCurrentPositionLatLng.latitude,
+        driverCurrentPositionLatLng.longitude,
+        widget.newTripDetailsInfo!.pickUpLatLng!.latitude,
+        widget.newTripDetailsInfo!.pickUpLatLng!.longitude,
+      );
 
-      // If distance is less than or equal to 5 meters, change status to "arrived"
-      if (distanceInMeters <= 5 && statusOfTrip == "accepted") {
+      double distanceToDropOff = Geolocator.distanceBetween(
+        driverCurrentPositionLatLng.latitude,
+        driverCurrentPositionLatLng.longitude,
+        widget.newTripDetailsInfo!.dropOffLatLng!.latitude,
+        widget.newTripDetailsInfo!.dropOffLatLng!.longitude,
+      );
+
+      /// If distance is less than or equal to 5 meters, change status to "arrived"
+      if (distanceToPickup <= 10 && statusOfTrip == "accepted") {
         setState(() {
-          buttonTitleText = "Start Trip";
+          buttonTitleText = "START TRIP";
           buttonColor = Colors.green;
         });
         statusOfTrip = "arrived";
@@ -206,6 +217,11 @@ class _NewTripPageState extends State<NewTripPage>
             .child("tripRequests")
             .child(widget.newTripDetailsInfo!.tripID!)
             .child("status").set("arrived");
+      }
+
+      /// If distance is less than or equal to 10 meters to drop-off location, end the trip automatically
+      if (distanceToDropOff <= 10 && statusOfTrip == "ontrip") {
+        endTripNow();
       }
 
       // Update driver's location marker
@@ -241,6 +257,7 @@ class _NewTripPageState extends State<NewTripPage>
           .set(updatedLocationOfDriver);
     });
   }
+
 
 
   updateTripDetailsInformation() async
